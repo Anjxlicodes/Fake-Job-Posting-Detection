@@ -1,0 +1,9 @@
+APP_NAME = "Fake Job Detector"
+
+BEST_MODEL = "Linear SVM (SVC)"
+
+DATASET_SIZE = 17880
+
+REAL_JOBS = 17014
+
+FAKE_JOBS = 866

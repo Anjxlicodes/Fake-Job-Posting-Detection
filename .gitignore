@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Generated prediction reports
+prediction_report.pdf
+
+# Processed dataset
+data/fake_job_processed.csv
+
+# Logs
+*.log
