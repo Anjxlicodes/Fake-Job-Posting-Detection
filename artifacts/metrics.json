@@ -1,0 +1,7 @@
+{
+    "accuracy": 97.85,
+    "precision": 74.0,
+    "recall": 85.55,
+    "f1_score": 79.36,
+    "best_model": "Linear SVM (SVC)"
+}
