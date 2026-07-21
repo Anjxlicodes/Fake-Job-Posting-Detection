@@ -136,7 +136,7 @@ The Linear SVM model achieved the best overall performance and was selected for 
 Clone the repository
 
 ```bash
-git clone https://github.com/manvendrasingh19/Fake-Job-Detection.git
+git clone https://github.com/Anjxlicodes/Fake-Job-Posting-Detection.git
 ```
 
 Move into the project directory
