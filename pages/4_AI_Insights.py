@@ -3,6 +3,8 @@ import pandas as pd
 import json
 from pathlib import Path
 from utils.scam_analyzer import analyze_text
+from utils.model_loader import vectorizer
+from utils.preprocessing import clean_text
 
 st.set_page_config(
     page_title="AI Insights",
@@ -216,7 +218,24 @@ if submitted:
 
         st.warning("⚠️ Please enter some text to analyze.")
 
+    if len(user_text.strip()) < 100:
+            st.warning(
+                "Please enter at least 100 characters for reliable analysis."
+            )
+            st.stop()
     else:
+        
+        cleaned = clean_text(user_text)
+        vector = vectorizer.transform([cleaned])
+        if vector.nnz < 10:
+            st.warning(
+                """
+        The entered text does not contain enough recognizable job-related content.
+
+        Please paste a complete job advertisement.
+        """
+            )
+            st.stop()
 
         detected, score, level = analyze_text(user_text)
         st.divider()

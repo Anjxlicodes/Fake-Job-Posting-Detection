@@ -27,60 +27,69 @@ st.write(
 
 st.divider()
 
-if "sample" not in st.session_state:
-    st.session_state.sample = {
-        "title": "",
-        "company": "",
-        "description": "",
-        "requirements": "",
-        "benefits": ""
-    }
+if "title" not in st.session_state:
+    st.session_state.title = ""
+    st.session_state.company = ""
+    st.session_state.description = ""
+    st.session_state.requirements = ""
+    st.session_state.benefits = ""
 col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("🟢 Load Genuine Example"):
-        st.session_state.sample = GENUINE_JOB
+        st.session_state.title = GENUINE_JOB["title"]
+        st.session_state.company = GENUINE_JOB["company"]
+        st.session_state.description = GENUINE_JOB["description"]
+        st.session_state.requirements = GENUINE_JOB["requirements"]
+        st.session_state.benefits = GENUINE_JOB["benefits"]
+
+        st.rerun()
 
 with col2:
     if st.button("🔴 Load Fraudulent Example"):
-        st.session_state.sample = FAKE_JOB
+        st.session_state.title = FAKE_JOB["title"]
+        st.session_state.company = FAKE_JOB["company"]
+        st.session_state.description = FAKE_JOB["description"]
+        st.session_state.requirements = FAKE_JOB["requirements"]
+        st.session_state.benefits = FAKE_JOB["benefits"]
+
+        st.rerun()
 with col3:
     if st.button("🗑️ Clear Form"):
-        st.session_state.sample = {
-            "title": "",
-            "company": "",
-            "description": "",
-            "requirements": "",
-            "benefits": ""
-        }
+        st.session_state.title = ""
+        st.session_state.company = ""
+        st.session_state.description = ""
+        st.session_state.requirements = ""
+        st.session_state.benefits = ""
+
         st.rerun()
 
 with st.form("prediction_form"):
 
     title = st.text_input(
         "Job Title",
-        value=st.session_state.sample["title"]
+        key="title"
     )
 
     company = st.text_area(
         "Company Profile",
-        value=st.session_state.sample["company"]
+        key="company"
     )
 
     description = st.text_area(
         "Job Description",
         height=220,
-        value=st.session_state.sample["description"]
+        key="description"
     )
 
     requirements = st.text_area(
         "Requirements",
-        value=st.session_state.sample["requirements"]
+        key="requirements"
     )
 
     benefits = st.text_area(
         "Benefits",
-        value=st.session_state.sample["benefits"]
+        key="benefits"
     )
 
     submitted = st.form_submit_button("Predict")
@@ -119,6 +128,13 @@ if submitted:
 
     # Vectorize
     vector = vectorizer.transform([cleaned])
+    # Ensure enough recognizable vocabulary
+    if vector.nnz < 10:
+        st.warning(
+            "The entered text contains too few recognizable words. "
+            "Please enter a complete and meaningful job posting."
+        )
+        st.stop()
 
     # Predict
     import time
